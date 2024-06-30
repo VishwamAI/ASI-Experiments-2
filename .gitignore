@@ -1,0 +1,27 @@
+# Ignore Python cache directories
+__pycache__/
+*.py[cod]
+
+# Ignore SciGen directory
+SciGen/
+
+# Ignore deep-abstract-generator directory
+deep-abstract-generator/
+
+# Ignore other temporary or log files
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Ignore virtual environment directories
+venv/
+env/
+.virtualenv/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
