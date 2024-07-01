@@ -27,8 +27,8 @@ class BERTTextGeneration:
         # Adjust the handling of the model's output to match the expected usage
         generated_texts = []
         for i in range(num_return_sequences):
-            # Use the first batch element
-            output_sequence = outputs[0, :, :]
+            # Use the corresponding batch element
+            output_sequence = outputs[i, :, :]
             print(f"output_sequence shape: {output_sequence.shape}")
             # Decode the output sequence without reshaping
             generated_text = self.tokenizer.decode(output_sequence.flatten(), skip_special_tokens=True)
