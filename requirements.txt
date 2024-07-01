@@ -8,10 +8,10 @@ requests==2.25.1
 
 # Text generation dependencies
 transformers==4.34.0
-jax==0.4.13
-jaxlib==0.4.13
+jax==0.3.25
+jaxlib==0.3.25
 ml_dtypes==0.4.0
-flax==0.7.0
+flax==0.6.8
 torch==2.0.1
 
 # Testing dependencies
