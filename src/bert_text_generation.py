@@ -39,12 +39,10 @@ class BERTTextGeneration:
         for i in range(num_return_sequences):
             # Use the corresponding batch element
             output_sequence = outputs[i, :, :]
-            # Reshape the output sequence to match the expected input format for the attention mechanism
-            output_sequence = output_sequence.reshape((output_sequence.shape[0], self.config.num_attention_heads, self.config.hidden_size // self.config.num_attention_heads))
             # Print shape of output sequence before decoding
             print(f"output_sequence shape: {output_sequence.shape}")
             # Decode the output sequence without reshaping
-            generated_text = self.tokenizer.decode(output_sequence.flatten(), skip_special_tokens=True)
+            generated_text = self.tokenizer.decode(output_sequence, skip_special_tokens=True)
             generated_texts.append(generated_text)
 
         return generated_texts
