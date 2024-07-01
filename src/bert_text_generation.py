@@ -29,7 +29,11 @@ class BERTTextGeneration:
         for i in range(num_return_sequences):
             # Ensure the output tensor is correctly shaped before decoding
             output_sequence = outputs[i]
-            generated_text = self.tokenizer.decode(output_sequence, skip_special_tokens=True)
+            print(f"output_sequence shape: {output_sequence.shape}")
+            # Reshape the output sequence to match the expected shape for decoding
+            # The correct shape should maintain the structure necessary for the attention heads
+            # Here we assume the output_sequence is already in the correct shape for decoding
+            generated_text = self.tokenizer.decode(output_sequence.flatten(), skip_special_tokens=True)
             generated_texts.append(generated_text)
 
         return generated_texts
