@@ -28,12 +28,12 @@ class BERTTextGeneration:
         generated_texts = []
         for i in range(num_return_sequences):
             # Ensure the output tensor is correctly shaped before decoding
-            output_sequence = outputs[:, i, :]
+            output_sequence = outputs[0, :, :]  # Use the first batch element
             print(f"output_sequence shape: {output_sequence.shape}")
             # Reshape the output sequence to match the expected shape for decoding
             # The correct shape should maintain the structure necessary for the attention heads
             # Here we reshape the output_sequence to include the number of attention heads and the size of each head
-            batch_size, seq_length, hidden_size = output_sequence.shape
+            seq_length, hidden_size = output_sequence.shape
             num_attention_heads = 12  # BERT base model has 12 attention heads
             head_dim = hidden_size // num_attention_heads
             output_sequence = output_sequence.reshape(seq_length, num_attention_heads, head_dim)
