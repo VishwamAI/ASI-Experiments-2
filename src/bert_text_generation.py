@@ -13,15 +13,20 @@ class BERTTextGeneration:
         input_ids = inputs['input_ids']
         attention_mask = inputs['attention_mask']
 
+        # Print shapes of input tensors
         print(f"input_ids shape: {input_ids.shape}")
         print(f"attention_mask shape: {attention_mask.shape}")
 
         def model_forward(params, input_ids, attention_mask):
-            return self.model(input_ids=input_ids, attention_mask=attention_mask, params=params).last_hidden_state
+            outputs = self.model(input_ids=input_ids, attention_mask=attention_mask, params=params)
+            # Print shape of last_hidden_state tensor
+            print(f"last_hidden_state shape: {outputs.last_hidden_state.shape}")
+            return outputs.last_hidden_state
 
         params = self.model.params
-        outputs = jax.vmap(model_forward, in_axes=(None, 0, 0))(params, input_ids, attention_mask)
+        outputs = jax.vmap(model_forward, in_axes=(None, 0, 0), out_axes=0)(params, input_ids, attention_mask)
 
+        # Print shape of output tensor
         print(f"outputs shape: {outputs.shape}")
 
         # Adjust the handling of the model's output to match the expected usage
@@ -29,9 +34,10 @@ class BERTTextGeneration:
         for i in range(num_return_sequences):
             # Use the corresponding batch element
             output_sequence = outputs[i, :, :]
+            # Print shape of output sequence before decoding
             print(f"output_sequence shape: {output_sequence.shape}")
             # Decode the output sequence without reshaping
-            generated_text = self.tokenizer.decode(output_sequence.flatten(), skip_special_tokens=True)
+            generated_text = self.tokenizer.decode(output_sequence, skip_special_tokens=True)
             generated_texts.append(generated_text)
 
         return generated_texts
