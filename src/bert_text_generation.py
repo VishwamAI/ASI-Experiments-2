@@ -28,7 +28,7 @@ class BERTTextGeneration:
         generated_texts = []
         for i in range(num_return_sequences):
             # Ensure the output tensor is correctly shaped before decoding
-            output_sequence = outputs[i]
+            output_sequence = outputs[:, i, :]
             print(f"output_sequence shape: {output_sequence.shape}")
             # Reshape the output sequence to match the expected shape for decoding
             # The correct shape should maintain the structure necessary for the attention heads
