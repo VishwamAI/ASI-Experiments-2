@@ -30,7 +30,10 @@ class BERTTextGeneration:
             # Ensure the output tensor is correctly shaped before decoding
             output_sequence = outputs[i]
             # Reshape the output sequence to match the expected input for decoding
-            output_sequence = output_sequence.reshape((output_sequence.shape[0], output_sequence.shape[1], -1))
+            batch_size, sequence_length, hidden_size = output_sequence.shape
+            num_attention_heads = 12
+            head_size = hidden_size // num_attention_heads
+            output_sequence = output_sequence.reshape((batch_size, sequence_length, num_attention_heads, head_size))
             generated_text = self.tokenizer.decode(output_sequence.flatten(), skip_special_tokens=True)
             generated_texts.append(generated_text)
 
