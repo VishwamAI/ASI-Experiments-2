@@ -36,7 +36,7 @@ class BERTTextGeneration:
             batch_size, seq_length, hidden_size = output_sequence.shape
             num_attention_heads = 12  # BERT base model has 12 attention heads
             head_dim = hidden_size // num_attention_heads
-            output_sequence = output_sequence.reshape(batch_size, seq_length, num_attention_heads, head_dim)
+            output_sequence = output_sequence.reshape(seq_length, num_attention_heads, head_dim)
             generated_text = self.tokenizer.decode(output_sequence.flatten(), skip_special_tokens=True)
             generated_texts.append(generated_text)
 
