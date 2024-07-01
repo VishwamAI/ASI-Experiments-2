@@ -32,7 +32,11 @@ class BERTTextGeneration:
             print(f"output_sequence shape: {output_sequence.shape}")
             # Reshape the output sequence to match the expected shape for decoding
             # The correct shape should maintain the structure necessary for the attention heads
-            # Here we assume the output_sequence is already in the correct shape for decoding
+            # Here we reshape the output_sequence to include the number of attention heads and the size of each head
+            seq_length, hidden_size = output_sequence.shape
+            num_attention_heads = 12  # BERT base model has 12 attention heads
+            head_dim = hidden_size // num_attention_heads
+            output_sequence = output_sequence.reshape(seq_length, num_attention_heads, head_dim)
             generated_text = self.tokenizer.decode(output_sequence.flatten(), skip_special_tokens=True)
             generated_texts.append(generated_text)
 
