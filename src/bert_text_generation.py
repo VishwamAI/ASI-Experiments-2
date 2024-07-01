@@ -18,6 +18,12 @@ class BERTTextGeneration:
         input_ids = inputs['input_ids']
         attention_mask = inputs['attention_mask']
 
+        # Ensure input tensors have a batch dimension
+        if len(input_ids.shape) == 2:
+            input_ids = input_ids[None, :]
+        if len(attention_mask.shape) == 2:
+            attention_mask = attention_mask[None, :]
+
         # Print shapes of input tensors
         print(f"input_ids shape: {input_ids.shape}")
         print(f"attention_mask shape: {attention_mask.shape}")
