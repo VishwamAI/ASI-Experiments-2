@@ -11,7 +11,7 @@ transformers==4.34.0
 jax==0.4.30
 jaxlib==0.4.30
 ml_dtypes==0.4.0
-flax==0.4.1
+flax==0.8.5
 torch==2.0.1
 
 # Testing dependencies
