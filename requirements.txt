@@ -7,7 +7,7 @@ scikit-learn==1.0.2
 requests==2.25.1
 
 # Text generation dependencies
-transformers==4.31.0
+transformers==4.34.0
 jax==0.4.30
 jaxlib==0.4.30
 flax==0.6.8
