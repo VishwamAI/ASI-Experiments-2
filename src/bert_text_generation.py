@@ -7,6 +7,11 @@ class BERTTextGeneration:
     def __init__(self, model_name='bert-base-uncased'):
         self.tokenizer = BertTokenizer.from_pretrained(model_name)
         self.model = FlaxBertModel.from_pretrained(model_name)
+        self.config = self.model.config
+
+        # Print model configuration parameters
+        print(f"num_attention_heads: {self.config.num_attention_heads}")
+        print(f"head_dim: {self.config.hidden_size // self.config.num_attention_heads}")
 
     def generate_text(self, prompt, max_length=50, num_return_sequences=1):
         inputs = self.tokenizer(prompt, return_tensors='jax', padding='max_length', max_length=max_length, truncation=True)
