@@ -42,7 +42,7 @@ class BERTTextGeneration:
             # Print shape of output sequence before decoding
             print(f"output_sequence shape: {output_sequence.shape}")
             # Decode the output sequence without reshaping
-            generated_text = self.tokenizer.decode(output_sequence, skip_special_tokens=True)
+            generated_text = self.tokenizer.decode(jnp.argmax(output_sequence, axis=-1), skip_special_tokens=True)
             generated_texts.append(generated_text)
 
         return generated_texts
