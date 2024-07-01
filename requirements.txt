@@ -8,8 +8,8 @@ requests==2.25.1
 
 # Text generation dependencies
 transformers==4.30.2
-torch==1.11.0
-tokenizers==0.13.3
+jax==0.4.10
+flax==0.6.8
 
 # Testing dependencies
 pytest==6.2.4
