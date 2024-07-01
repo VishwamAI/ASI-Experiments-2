@@ -18,8 +18,8 @@ def test_flax_transformers_compatibility():
 
         # Mock the from_pretrained method to return a simple mock model
         mock_model = SimpleMockModel()
-        mock_model_call.return_value = mock_model
         mock_from_pretrained.return_value = mock_model
+        mock_model_call.return_value = mock_model.__call__(None, None)
 
         # Define a simple input
         input_text = "Hello, this is a test."
