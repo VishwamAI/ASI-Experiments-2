@@ -1,8 +1,7 @@
 from transformers import BertTokenizer, FlaxBertModel
 import jax
 import jax.numpy as jnp
-from flax import linen as nn
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
 def test_flax_transformers_compatibility():
     # Initialize the tokenizer
@@ -12,10 +11,14 @@ def test_flax_transformers_compatibility():
     with patch('transformers.FlaxBertModel.from_pretrained') as mock_from_pretrained, \
          patch('transformers.FlaxBertModel.__call__') as mock_model_call:
 
-        # Mock the from_pretrained method to return a mock model
-        mock_model = nn.Module()
+        # Create a simple mock class to avoid recursion issues
+        class SimpleMockModel:
+            def __call__(self, input_ids, attention_mask):
+                return MagicMock(last_hidden_state=jnp.zeros((1, 10, 768)))
+
+        # Mock the from_pretrained method to return a simple mock model
+        mock_model = SimpleMockModel()
         mock_model_call.return_value = mock_model
-        mock_model_call.return_value.last_hidden_state = jnp.zeros((1, 10, 768))
         mock_from_pretrained.return_value = mock_model
 
         # Define a simple input
