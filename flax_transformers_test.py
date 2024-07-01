@@ -8,10 +8,15 @@ def test_flax_transformers_compatibility():
     # Initialize the tokenizer
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
-    # Mock the FlaxBertModel's output
-    with patch('transformers.FlaxBertModel.__call__') as mock_model_call:
-        mock_model_call.return_value = nn.Module()
+    # Mock the FlaxBertModel's from_pretrained and __call__ methods
+    with patch('transformers.FlaxBertModel.from_pretrained') as mock_from_pretrained, \
+         patch('transformers.FlaxBertModel.__call__') as mock_model_call:
+
+        # Mock the from_pretrained method to return a mock model
+        mock_model = nn.Module()
+        mock_model_call.return_value = mock_model
         mock_model_call.return_value.last_hidden_state = jnp.zeros((1, 10, 768))
+        mock_from_pretrained.return_value = mock_model
 
         # Define a simple input
         input_text = "Hello, this is a test."
